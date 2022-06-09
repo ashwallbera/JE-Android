@@ -1,8 +1,10 @@
-package com.example.je_attendancesystem;
+package com.example.je_attendancesystem.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.je_attendancesystem.R;
 
 public class MainActivity extends AppCompatActivity {
 
