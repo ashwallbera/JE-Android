@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGreen"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        app:srcCompat="@drawable/logoiconinsignin" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="270dp"
+        android:text="SIGN IN"
+        android:textColor="@color/solidGreen"
+        android:textAlignment="center" />
+
+    <ImageView
+        android:layout_width="330dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="350dp"
+        app:srcCompat="@drawable/ic_signinbox"
+        />
+
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="370dp"
+        android:backgroundTint="@color/solidGreen"
+
+        android:hint="Username"
+        android:textColor="@color/solidGreen"
+        android:textColorHint="#808080" />
+
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="430dp"
+        android:hint="Password"
+        android:backgroundTint="@color/solidGreen"
+
+        android:textColor="@color/solidGreen"
+        android:textColorHint="#808080" />
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="550dp"
+        android:backgroundTint="@color/solidGreen"
+        android:text="SIGN IN"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>
