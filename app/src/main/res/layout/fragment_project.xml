@@ -6,9 +6,31 @@
     tools:context=".fragments.FragmentProject">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:background="@color/lightGreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        >
+        <TextView
+            android:id="@+id/text_listofproject"
+            android:layout_centerHorizontal="true"
+            android:textSize="17dp"
+            android:textColor="@color/black"
+            android:text="LIST OF PROJECTS"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/text_listofproject"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="25dp" />
+    </RelativeLayout>
 
 </FrameLayout>

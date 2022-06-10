@@ -3,12 +3,18 @@ package com.example.je_attendancesystem.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.je_attendancesystem.R;
+import com.example.je_attendancesystem.adapter.ProjectAdapter;
+import com.example.je_attendancesystem.models.ProjectModel;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +67,28 @@ public class FragmentProject extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project, container, false);
+        View view =  inflater.inflate(R.layout.fragment_project, container, false);
+
+
+        //Create List of Project
+        ArrayList<ProjectModel> projectModels = new ArrayList<>();
+
+        //Sample
+        projectModels.add(new ProjectModel());
+        projectModels.add(new ProjectModel());
+        projectModels.add(new ProjectModel());
+        projectModels.add(new ProjectModel());
+        //Reycleview instance
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        GridLayoutManager manager  = new GridLayoutManager(this.getActivity(),2);
+        recyclerView.setLayoutManager(manager);
+
+        //Scroll down
+        recyclerView.smoothScrollToPosition(projectModels.size());
+        ProjectAdapter adapter = new ProjectAdapter(this.getContext(), projectModels);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        return view;
     }
 }

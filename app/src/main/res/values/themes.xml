@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/lightGreen</item>
-        <item name="colorPrimaryVariant">@color/lightGreen</item>
+        <item name="colorPrimary">@color/solidGreen</item>
+        <item name="colorPrimaryVariant">@color/solidGreen</item>
         <item name="colorOnPrimary">@color/solidGreen</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -20,4 +20,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="Theme.JEAttendanceSystem.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.JEAttendanceSystem.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.JEAttendanceSystem.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

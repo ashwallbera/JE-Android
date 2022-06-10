@@ -14,9 +14,13 @@
         android:theme="@style/Theme.JEAttendanceSystem"
         tools:targetApi="31">
         <activity
+            android:name=".activity.MainMenu"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
