@@ -45,8 +45,8 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="430dp"
-        android:hint="Password"
         android:backgroundTint="@color/solidGreen"
+        android:hint="Password"
 
         android:textColor="@color/solidGreen"
         android:textColorHint="#808080" />
