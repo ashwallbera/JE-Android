@@ -38,7 +38,7 @@ public class MainMenu extends AppCompatActivity {
         fragmentCalendar = new FragmentTimesheet();
 
         //set project first fragment
-        replaceFragment(fragmentCalendar);
+        replaceFragment(fragmentProject);
         drawerLayout = findViewById(R.id.my_drawer_layout);
         navDrawer = findViewById(R.id.nav_drawer);
 

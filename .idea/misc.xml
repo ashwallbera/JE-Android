@@ -4,9 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/drawable/icon_unselectedblackuserworker.xml" value="0.1489864864864865" />
+        <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/drawable/logoiconinsignin.xml" value="0.13547297297297298" />
         <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/layout/activity_main.xml" value="0.15989583333333332" />
         <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/layout/activity_main_menu.xml" value="0.12" />
-        <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/layout/drawer_header.xml" value="0.15989583333333332" />
+        <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/layout/drawer_header.xml" value="0.25" />
         <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/layout/fragment_calendar.xml" value="0.125" />
         <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/layout/fragment_project.xml" value="0.2683246073298429" />
         <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/layout/project_card.xml" value="0.22" />
