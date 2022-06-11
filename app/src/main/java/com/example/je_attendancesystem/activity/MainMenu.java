@@ -11,18 +11,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 
 import com.example.je_attendancesystem.R;
+import com.example.je_attendancesystem.fragments.FragmentTimesheet;
 import com.example.je_attendancesystem.fragments.FragmentProject;
-import com.google.android.material.internal.NavigationMenu;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainMenu extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navDrawer;
     private FragmentProject fragmentProject;
+    private FragmentTimesheet fragmentCalendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +35,10 @@ public class MainMenu extends AppCompatActivity {
 
         //Fragments
         fragmentProject = new FragmentProject();
+        fragmentCalendar = new FragmentTimesheet();
 
         //set project first fragment
-        replaceFragment(fragmentProject);
+        replaceFragment(fragmentCalendar);
         drawerLayout = findViewById(R.id.my_drawer_layout);
         navDrawer = findViewById(R.id.nav_drawer);
 
