@@ -18,6 +18,10 @@ import com.example.je_attendancesystem.R;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentTimesheet#newInstance} factory method to
@@ -75,7 +79,7 @@ public class FragmentTimesheet extends Fragment {
         // now register the text view and the button with
         // their appropriate IDs
         mPickDateButton = view.findViewById(R.id.btn_pick);
-       // mShowSelectedDateText = findViewById(R.id.show_selected_date);
+        // mShowSelectedDateText = findViewById(R.id.show_selected_date);
 
         // now create instance of the material date picker
         // builder make sure to add the "dateRangePicker"
@@ -93,7 +97,6 @@ public class FragmentTimesheet extends Fragment {
         // now create the instance of the material date
         // picker
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
-
 
 
         // handle select date button which opens the
@@ -127,15 +130,24 @@ public class FragmentTimesheet extends Fragment {
                         CharSequence text = "Hello toast!";
                         int duration = Toast.LENGTH_SHORT;
 
-                        Toast toast = Toast.makeText(context, materialDatePicker.getHeaderText(), duration);
+                        Pair<Long, Long> selected = (Pair<Long, Long>) selection;
+
+                        Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                        utc.setTimeInMillis(selected.second);
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                        String formatted = format.format(utc.getTime());
+
+                        Toast toast = Toast.makeText(context, formatted+"", duration);
                         toast.show();
+
+                        // materialDatePicker.getSelection();
+                        //materialDatePicker.getHeaderText()
                         mPickDateButton.setEnabled(true);
                         //mShowSelectedDateText.setText("Selected Date is : " + materialDatePicker.getHeaderText());
                         // in the above statement, getHeaderText
                         // will return selected date preview from the
                         // dialog
                     }
-
 
 
                 });
@@ -153,6 +165,6 @@ public class FragmentTimesheet extends Fragment {
                 mPickDateButton.setEnabled(true);
             }
         });
-        return  view;
+        return view;
     }
 }
