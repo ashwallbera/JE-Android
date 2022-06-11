@@ -76,6 +76,12 @@ public class FragmentTimesheet extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        //get the project object
+        String objFromCard = getArguments().getString("projectObj");
+
+        Toast.makeText(this.getContext(), "Timesheet "+objFromCard, Toast.LENGTH_SHORT).show();
+
         // now register the text view and the button with
         // their appropriate IDs
         mPickDateButton = view.findViewById(R.id.btn_pick);
