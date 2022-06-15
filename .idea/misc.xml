@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.13074324324324324" />
+        <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.13074324324324324" />
+        <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/drawable/ic_signinbox.xml" value="0.13074324324324324" />
         <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/drawable/icon_unselectedblackuserworker.xml" value="0.1489864864864865" />
         <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/drawable/logoiconinsignin.xml" value="0.13547297297297298" />
         <entry key="..\:/Documents/AndroidApp/JE-Android/app/src/main/res/layout/activity_main.xml" value="0.15989583333333332" />

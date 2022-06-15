@@ -97,7 +97,7 @@
                     android:layout_marginLeft="-44dp"
                     android:layout_marginTop="19dp"
                     android:layout_marginBottom="-15dp"
-                    android:background="@drawable/icon_unselectedblackuserworker" />
+                    android:background="@drawable/icon_selectedwhiteuserworker" />
 
 
             </RelativeLayout>
