@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="54dp"
+    android:background="@color/solidGreen"
+    android:layout_margin="10dp"
+    >
+    <ImageView
+        android:id="@+id/icon_calendar"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/icon_timesheetcalendarunselected"
+        />
+
+    <TextView
+        android:id="@+id/text_view_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/icon_calendar"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="11dp"
+        android:textStyle="bold"
+        android:text="January 12, 2022"
+        android:textColor="@color/white"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/text_view_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_date"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/icon_calendar"
+        android:layout_marginLeft="11dp"
+        android:text="Wednesday"
+        android:textColor="@color/white"
+        android:textSize="14dp" />
+
+    <ImageButton
+        android:id="@+id/btn_drop_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/ic_drop_down" />
+
+
+</RelativeLayout>
