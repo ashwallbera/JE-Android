@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +17,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.je_attendancesystem.R;
+import com.example.je_attendancesystem.adapter.DateTimeAdapter;
+import com.example.je_attendancesystem.models.DateTimeModel;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -171,6 +176,24 @@ public class FragmentTimesheet extends Fragment {
                 mPickDateButton.setEnabled(true);
             }
         });
+
+        // models
+
+        ArrayList<DateTimeModel> dateTimeModels = new ArrayList<>();
+        dateTimeModels.add(new DateTimeModel());
+        dateTimeModels.add(new DateTimeModel());
+        dateTimeModels.add(new DateTimeModel());
+
+        //Recyclerview instance
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        LinearLayoutManager manager = new LinearLayoutManager(this.getActivity());
+        recyclerView.setLayoutManager(manager);
+
+        //Scroll down
+        recyclerView.smoothScrollToPosition(dateTimeModels.size());
+        DateTimeAdapter adapter = new DateTimeAdapter(this.getContext(), dateTimeModels);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         return view;
     }
 }

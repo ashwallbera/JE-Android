@@ -78,7 +78,7 @@ public class FragmentProject extends Fragment {
         projectModels.add(new ProjectModel());
         projectModels.add(new ProjectModel());
         projectModels.add(new ProjectModel());
-        //Reycleview instance
+        //Recyclerview instance
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         GridLayoutManager manager  = new GridLayoutManager(this.getActivity(),2);
         recyclerView.setLayoutManager(manager);

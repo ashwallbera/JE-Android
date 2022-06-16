@@ -34,4 +34,5 @@ public class TimesheetAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return timesheetModels.size();
     }
+
 }
