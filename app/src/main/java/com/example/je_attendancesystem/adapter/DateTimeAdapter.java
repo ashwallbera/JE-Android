@@ -10,11 +10,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.je_attendancesystem.R;
 import com.example.je_attendancesystem.models.DateTimeModel;
-import com.example.je_attendancesystem.models.ProjectModel;
 import com.example.je_attendancesystem.models.TimesheetModel;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.date_time, parent, false);
+                .inflate(R.layout.date_time_inflater, parent, false);
         return new DateTimeAdapterHolder(view);
     }
 
@@ -60,21 +60,37 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
     public class DateTimeAdapterHolder extends  RecyclerView.ViewHolder{
         TextView date,day;
         ImageButton btn_drop_down;
+        RecyclerView recyclerView;
         public DateTimeAdapterHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.text_view_date);
             day = itemView.findViewById(R.id.text_view_day);
             btn_drop_down = itemView.findViewById(R.id.btn_drop_down);
+            //Recycleview Instance
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.recycler_view_timesheet);
+            LinearLayoutManager manager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(manager);
         }
 
         void bind(DateTimeModel dateTimeModel){
             btn_drop_down.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Create recyclerview
-                    //get data
+
                 }
             });
+            //Get data here
+
+            //List of employee
+            ArrayList<TimesheetModel> timesheetModels = new ArrayList<>();
+            timesheetModels.add(new TimesheetModel());
+            timesheetModels.add(new TimesheetModel());
+
+            // create adapter
+            recyclerView.smoothScrollToPosition(timesheetModels.size());
+            TimesheetAdapter adapter = new TimesheetAdapter(context, timesheetModels);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
     }
 }

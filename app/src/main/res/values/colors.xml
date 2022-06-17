@@ -9,5 +9,9 @@
     <color name="white">#F2F2F2</color>
     <color name="lightGreen">#C0FCC7</color>
     <color name="solidGreen">#066133</color>
+    <color name="semisolidGreen">#46AC78</color>
+    <color name="semilightGreen">#84FF92</color>
+
+
     <color name="red">#FF0000</color>
 </resources>
