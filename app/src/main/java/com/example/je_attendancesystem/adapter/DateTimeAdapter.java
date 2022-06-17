@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,7 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
         ImageButton btn_drop_down;
         RecyclerView recyclerView;
         TimesheetAdapter adapter;
+        RelativeLayout date_time_layout_model;
         public DateTimeAdapterHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.text_view_date);
@@ -72,6 +74,7 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
             recyclerView = (RecyclerView) itemView.findViewById(R.id.recycler_view_timesheet);
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(manager);
+            date_time_layout_model = itemView.findViewById(R.id.date_time_layout_model);
         }
 
         void bind(DateTimeModel dateTimeModel){
@@ -85,7 +88,30 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
             adapter.notifyDataSetChanged();
 
             //Click listener for drop down
-            btn_drop_down.setOnClickListener(new View.OnClickListener() {
+//            btn_drop_down.setOnClickListener(new View.OnClickListener() {
+//                int x = 0;
+//                @Override
+//                public void onClick(View view) {
+//                    if(x % 2 == 0){
+//                        ArrayList<TimesheetModel> timesheetModels = new ArrayList<>();
+//                        timesheetModels.add(new TimesheetModel());
+//                        timesheetModels.add(new TimesheetModel());
+//                        adapter.getTimesheetModels().addAll(timesheetModels);
+//                        adapter.notifyDataSetChanged();
+//                        btn_drop_down.setBackground(context.getDrawable(R.drawable.ic_close_24));
+//
+//                    }else {
+//                        adapter.getTimesheetModels().clear();
+//                        adapter.notifyDataSetChanged();
+//                        btn_drop_down.setBackground(context.getDrawable(R.drawable.ic_drop_down));
+//                    }
+//                    x++;
+//
+//                }
+//            });
+
+            //For layout listener
+            date_time_layout_model.setOnClickListener(new View.OnClickListener() {
                 int x = 0;
                 @Override
                 public void onClick(View view) {

@@ -183,6 +183,12 @@ public class FragmentTimesheet extends Fragment {
         dateTimeModels.add(new DateTimeModel());
         dateTimeModels.add(new DateTimeModel());
         dateTimeModels.add(new DateTimeModel());
+        dateTimeModels.add(new DateTimeModel());
+        dateTimeModels.add(new DateTimeModel());
+        dateTimeModels.add(new DateTimeModel());
+        dateTimeModels.add(new DateTimeModel());
+        dateTimeModels.add(new DateTimeModel());
+        dateTimeModels.add(new DateTimeModel());
 
         //Recyclerview instance
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -190,7 +196,7 @@ public class FragmentTimesheet extends Fragment {
         recyclerView.setLayoutManager(manager);
 
         //Scroll down
-        recyclerView.smoothScrollToPosition(dateTimeModels.size());
+        //recyclerView.smoothScrollToPosition(dateTimeModels.size());
         DateTimeAdapter adapter = new DateTimeAdapter(this.getContext(), dateTimeModels);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
