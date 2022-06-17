@@ -1,6 +1,7 @@
 package com.example.je_attendancesystem.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
         TextView date,day;
         ImageButton btn_drop_down;
         RecyclerView recyclerView;
+        TimesheetAdapter adapter;
         public DateTimeAdapterHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.text_view_date);
@@ -73,24 +75,39 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
         }
 
         void bind(DateTimeModel dateTimeModel){
+
+            //List of employee
+            ArrayList<TimesheetModel> timesheetModels = new ArrayList<>();
+            // create adapter
+            recyclerView.smoothScrollToPosition(timesheetModels.size());
+            adapter = new TimesheetAdapter(context, timesheetModels);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+            //Click listener for drop down
             btn_drop_down.setOnClickListener(new View.OnClickListener() {
+                int x = 0;
                 @Override
                 public void onClick(View view) {
+                    if(x % 2 == 0){
+                        ArrayList<TimesheetModel> timesheetModels = new ArrayList<>();
+                        timesheetModels.add(new TimesheetModel());
+                        timesheetModels.add(new TimesheetModel());
+                        adapter.getTimesheetModels().addAll(timesheetModels);
+                        adapter.notifyDataSetChanged();
+                        btn_drop_down.setBackground(context.getDrawable(R.drawable.ic_close_24));
+
+                    }else {
+                        adapter.getTimesheetModels().clear();
+                        adapter.notifyDataSetChanged();
+                        btn_drop_down.setBackground(context.getDrawable(R.drawable.ic_drop_down));
+                    }
+                    x++;
 
                 }
             });
             //Get data here
 
-            //List of employee
-            ArrayList<TimesheetModel> timesheetModels = new ArrayList<>();
-            timesheetModels.add(new TimesheetModel());
-            timesheetModels.add(new TimesheetModel());
-
-            // create adapter
-            recyclerView.smoothScrollToPosition(timesheetModels.size());
-            TimesheetAdapter adapter = new TimesheetAdapter(context, timesheetModels);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
         }
     }
 }

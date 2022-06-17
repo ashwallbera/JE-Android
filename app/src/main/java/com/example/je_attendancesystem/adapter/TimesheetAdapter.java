@@ -53,6 +53,11 @@ public class TimesheetAdapter extends RecyclerView.Adapter {
         viewToAnimate.startAnimation(animation);
 
     }
+
+    public ArrayList<TimesheetModel> getTimesheetModels() {
+        return timesheetModels;
+    }
+
     public class TimesheetAdapterHolder extends RecyclerView.ViewHolder{
 
         public TimesheetAdapterHolder(@NonNull View itemView) {
