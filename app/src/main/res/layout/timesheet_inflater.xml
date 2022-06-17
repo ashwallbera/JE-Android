@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="61dp"
+    android:background="@color/semisolidGreen"
+    >
+
+    <ImageView
+        android:id="@+id/profile_pic"
+        android:layout_centerVertical="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="22dp"
+        android:background="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/timesheet_full_name"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/profile_pic"
+        android:text="Name"
+        android:textColor="@color/white"
+        android:textSize="13dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timesheet_full_name"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/profile_pic"
+        android:text="Position"
+        android:textColor="@color/white"
+        android:textSize="13dp" />
+    <TextView
+        android:layout_marginTop="15dp"
+        android:id="@+id/time_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IN: 9: 30 am"
+        android:layout_marginStart="43dp"
+        android:layout_toEndOf="@+id/timesheet_full_name"
+        android:textColor="@color/white"
+        android:textSize="13dp"
+        />
+
+    <TextView
+        android:id="@+id/time_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_in"
+        android:layout_marginStart="43dp"
+        android:layout_toEndOf="@+id/timesheet_full_name"
+        android:text="OUT: 9: 30 pm"
+        android:textColor="@color/white"
+        android:textSize="13dp" />
+
+</RelativeLayout>
