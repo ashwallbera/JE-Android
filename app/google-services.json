@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1062296600910",
+    "firebase_url": "https://jadocenterprises-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "jadocenterprises",
+    "storage_bucket": "jadocenterprises.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062296600910:android:9688bf541744001b2e9e1f",
+        "android_client_info": {
+          "package_name": "com.example.je_attendancesystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062296600910-q0b1fd8rc09pnb12etvd446umqtu90qp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf_N4vOSrwCAHmKmdbhVlqVcSJyFfdYeI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062296600910-q0b1fd8rc09pnb12etvd446umqtu90qp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
