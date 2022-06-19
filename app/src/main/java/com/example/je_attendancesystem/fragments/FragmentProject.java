@@ -2,10 +2,12 @@ package com.example.je_attendancesystem.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,14 @@ import android.view.ViewGroup;
 import com.example.je_attendancesystem.R;
 import com.example.je_attendancesystem.adapter.ProjectAdapter;
 import com.example.je_attendancesystem.models.ProjectModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -22,6 +32,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class FragmentProject extends Fragment {
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,16 +79,37 @@ public class FragmentProject extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_project, container, false);
+        // Write a message to the database
+        //FirebaseApp.initializeApp(this.getContext());
+        DatabaseReference mDatabase;
+// ...
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
 
         //Create List of Project
         ArrayList<ProjectModel> projectModels = new ArrayList<>();
 
-        //Sample
+        //Get data from firebase
+        // Read from the database
+        mDatabase.child("project").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("firebaseread",""+snapshot.getValue());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("firebaseread","");
+            }
+        });
+
         projectModels.add(new ProjectModel());
         projectModels.add(new ProjectModel());
         projectModels.add(new ProjectModel());
         projectModels.add(new ProjectModel());
+        
         //Recyclerview instance
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         GridLayoutManager manager  = new GridLayoutManager(this.getActivity(),2);
