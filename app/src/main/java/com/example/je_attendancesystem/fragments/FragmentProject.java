@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class FragmentProject extends Fragment {
-
+    ProjectAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,6 +80,8 @@ public class FragmentProject extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_project, container, false);
+
+
         // Write a message to the database
         //FirebaseApp.initializeApp(this.getContext());
         DatabaseReference mDatabase;
@@ -96,6 +99,25 @@ public class FragmentProject extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.d("firebaseread",""+snapshot.getValue());
+                //Deserialize
+
+//                Gson g = new Gson();
+//                ProjectModel[] projectModelsd =
+//                        g.fromJson(
+//                                ""+snapshot.getChildren(), ProjectModel[].class);
+
+
+                Log.d("firebasereadchild",""+snapshot.getChildren());
+                projectModels.clear();
+                adapter.notifyDataSetChanged();
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    Log.d("firebasereaddata",""+dataSnapshot.getValue());
+                    ProjectModel projectModel = new Gson().fromJson(dataSnapshot.getValue()+"",
+                            ProjectModel.class);
+                    Log.d("firebasereaddata",""+projectModel.location);
+                    projectModels.add(projectModel);
+                }
+                adapter.notifyDataSetChanged();
 
             }
 
@@ -105,10 +127,7 @@ public class FragmentProject extends Fragment {
             }
         });
 
-        projectModels.add(new ProjectModel());
-        projectModels.add(new ProjectModel());
-        projectModels.add(new ProjectModel());
-        projectModels.add(new ProjectModel());
+
         
         //Recyclerview instance
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -117,7 +136,7 @@ public class FragmentProject extends Fragment {
 
         //Scroll down
         recyclerView.smoothScrollToPosition(projectModels.size());
-        ProjectAdapter adapter = new ProjectAdapter(this.getContext(), projectModels);
+        adapter = new ProjectAdapter(this.getContext(), projectModels);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
