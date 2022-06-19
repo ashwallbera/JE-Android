@@ -123,7 +123,7 @@ public class FragmentProject extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("firebaseread","");
+                Log.d("firebaseread",""+error);
             }
         });
 
