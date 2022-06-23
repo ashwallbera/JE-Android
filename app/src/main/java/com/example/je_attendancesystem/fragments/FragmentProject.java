@@ -112,9 +112,13 @@ public class FragmentProject extends Fragment {
                 adapter.notifyDataSetChanged();
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     Log.d("firebasereaddata",""+dataSnapshot.getValue());
-                    ProjectModel projectModel = new Gson().fromJson(dataSnapshot.getValue()+"",
-                            ProjectModel.class);
-                    Log.d("firebasereaddata",""+projectModel.location);
+                    ProjectModel projectModel =
+                            new ProjectModel("",
+                                    dataSnapshot.child("id").getValue()+"",
+                                    dataSnapshot.child("name").getValue()+"",
+                                    dataSnapshot.child("location").getValue()+"",
+                                    dataSnapshot.child("isFinished").getValue()+"");
+                    //Log.d("firebasereaddata",""+projectModel.location);
                     projectModels.add(projectModel);
                 }
                 adapter.notifyDataSetChanged();

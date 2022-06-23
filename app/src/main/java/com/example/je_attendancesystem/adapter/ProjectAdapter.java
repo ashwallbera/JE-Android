@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,7 +44,7 @@ public class ProjectAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ProjectModel projectModel = this.projectModels.get(position);
-
+        ((ProjectAdapterHolder)holder).bind(projectModel);
     }
 
     @Override
@@ -63,8 +64,12 @@ public class ProjectAdapter extends RecyclerView.Adapter {
 
     public class ProjectAdapterHolder extends  RecyclerView.ViewHolder{
         MaterialCardView card;
+        TextView project_name, total, location;
         public ProjectAdapterHolder(@NonNull View itemView) {
             super(itemView);
+            project_name = itemView.findViewById(R.id.project_name);
+            location = itemView.findViewById(R.id.project_location);
+            total = itemView.findViewById(R.id.total_workers);
             card = itemView.findViewById(R.id.card);
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,7 +84,9 @@ public class ProjectAdapter extends RecyclerView.Adapter {
             });
         }
         void bind(ProjectModel projectModel){
-            
+            project_name.setText(projectModel.getName());
+            location.setText(projectModel.getLocation());
+            //total.setText(projectModel.);
         }
     }
 
