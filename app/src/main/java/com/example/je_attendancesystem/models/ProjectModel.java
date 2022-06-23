@@ -10,10 +10,10 @@ import java.util.Map;
 public class ProjectModel {
 
     public String uid;
-    public String id;
-    public String name;
-    public String location;
-    public String isFinished;
+    private String id;
+    private String name;
+    private String location;
+    private String isFinished;
 
     public ProjectModel(){
 
@@ -35,5 +35,25 @@ public class ProjectModel {
         result.put("location", location);
         result.put("name", name);
         return result;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getIsFinished() {
+        return isFinished;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getUid() {
+        return uid;
     }
 }
