@@ -19,15 +19,15 @@ public class DateTimeModel {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public DateTimeModel(String date){
-        Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy");
-        String formatted = format.format(utc.getTime());
+//        Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+//        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy");
+//        String formatted = format.format(utc.getTime());
 
         //USE ANOTHER FORMATTER TO PARSE TO LOCALDATE THE UTC DATE
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("M/dd/yyyy");
-        LocalDate day = LocalDate.parse(""+utc.getTime(),dtf);
-        this.date = formatted;
-        this.day = day.getDayOfWeek().toString();
+        LocalDate localDate = LocalDate.parse(""+date,dtf);
+        this.date = ""+localDate.getMonth()+" "+localDate.getDayOfMonth()+", "+localDate.getYear();
+        this.day = localDate.getDayOfWeek().toString();
     }
 
     public String getDate() {
