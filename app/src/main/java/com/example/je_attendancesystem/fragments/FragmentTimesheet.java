@@ -3,13 +3,17 @@ package com.example.je_attendancesystem.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +25,22 @@ import com.example.je_attendancesystem.adapter.DateTimeAdapter;
 import com.example.je_attendancesystem.models.DateTimeModel;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,8 +49,12 @@ import java.util.TimeZone;
  */
 public class FragmentTimesheet extends Fragment {
     private Button mPickDateButton;
-
-
+    ArrayList<DateTimeModel> dateTimeModels;
+    //Firebase instance
+    DatabaseReference mDatabase;
+    String startDate;
+    String endDate;
+    DateTimeAdapter adapter;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -82,10 +101,18 @@ public class FragmentTimesheet extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_timesheet, container, false);
 
+        //GET TIME NOW
+
+        Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy");
+        String formatted = format.format(utc.getTime());
+        startDate = formatted;
+        endDate = formatted;
+
         //get the project object
         String objFromCard = getArguments().getString("projectObj");
 
-        Toast.makeText(this.getContext(), "Timesheet "+objFromCard, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getContext(), "Timesheet "+formatted, Toast.LENGTH_SHORT).show();
 
         // now register the text view and the button with
         // their appropriate IDs
@@ -130,6 +157,7 @@ public class FragmentTimesheet extends Fragment {
         // material design date picker
         materialDatePicker.addOnPositiveButtonClickListener(
                 new MaterialPickerOnPositiveButtonClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onPositiveButtonClick(Object selection) {
@@ -144,12 +172,34 @@ public class FragmentTimesheet extends Fragment {
                         Pair<Long, Long> selected = (Pair<Long, Long>) selection;
 
                         Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                        utc.setTimeInMillis(selected.second);
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                        utc.setTimeInMillis(selected.first);
+                        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy");
                         String formatted = format.format(utc.getTime());
 
-                        Toast toast = Toast.makeText(context, formatted+"", duration);
+                        Calendar utc2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                        utc2.setTimeInMillis(selected.second);
+                        String formatted2 = format.format(utc2.getTime());
+
+                        Toast toast = Toast.makeText(context, formatted+" "+formatted2, duration);
                         toast.show();
+
+                        //Get list of dates in date range
+                        DateTimeFormatter parseFormat = DateTimeFormatter.ofPattern("M/dd/yyyy");
+                        LocalDate startDate = LocalDate.parse(""+formatted,parseFormat);
+                        LocalDate endDate = LocalDate.parse(""+formatted2,parseFormat);
+
+                        long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+
+                        List<LocalDate> listOfDates = Stream.iterate(startDate, date -> date.plusDays(1))
+                                .limit(numOfDays)
+                                .collect(Collectors.toList());
+
+                        dateTimeModels.clear();
+                        for(LocalDate date: listOfDates){
+                          //  System.out.println(date.format(parseFormat));
+                            dateTimeModels.add(new DateTimeModel(""+date.format(parseFormat)));
+                        }
+                        adapter.notifyDataSetChanged();
 
                         // materialDatePicker.getSelection();
                         //materialDatePicker.getHeaderText()
@@ -177,19 +227,15 @@ public class FragmentTimesheet extends Fragment {
             }
         });
 
+
+// ...
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         // models
 
-        ArrayList<DateTimeModel> dateTimeModels = new ArrayList<>();
-        dateTimeModels.add(new DateTimeModel());
-        dateTimeModels.add(new DateTimeModel());
-        dateTimeModels.add(new DateTimeModel());
-        dateTimeModels.add(new DateTimeModel());
-        dateTimeModels.add(new DateTimeModel());
-        dateTimeModels.add(new DateTimeModel());
-        dateTimeModels.add(new DateTimeModel());
-        dateTimeModels.add(new DateTimeModel());
-        dateTimeModels.add(new DateTimeModel());
+         dateTimeModels = new ArrayList<>();
 
+       // mDatabase.child("attendance")
+        setAttendance("");
         //Recyclerview instance
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this.getActivity());
@@ -197,9 +243,30 @@ public class FragmentTimesheet extends Fragment {
 
         //Scroll down
         //recyclerView.smoothScrollToPosition(dateTimeModels.size());
-        DateTimeAdapter adapter = new DateTimeAdapter(this.getContext(), dateTimeModels);
+        adapter = new DateTimeAdapter(this.getContext(), dateTimeModels);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         return view;
+    }
+
+    private void setAttendance(String projectid){
+        mDatabase.child("attendance").orderByChild("datecreated")
+                .startAt(""+startDate).endAt(""+endDate)
+                .addValueEventListener(new ValueEventListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("datecreated",""+snapshot.getValue());
+                        for(DataSnapshot data: snapshot.getChildren() ){
+                            dateTimeModels.add(new DateTimeModel(data.child("datecreated").getValue().toString()));
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }

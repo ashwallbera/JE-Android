@@ -10,19 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/lightGreen">
+
         <Button
             android:id="@+id/btn_pick"
-            android:layout_marginTop="30dp"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="PICK DATE"
-            />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="PICK DATE" />
+
+        <Button
+            android:id="@+id/btn_timein"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="26dp"
+            android:layout_toStartOf="@+id/btn_pick"
+            android:text="Time in" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
-            android:layout_width="388dp"
-            android:layout_height="752dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignTop="@+id/btn_pick"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
