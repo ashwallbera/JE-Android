@@ -191,7 +191,7 @@ public class FragmentTimesheet extends Fragment {
                         long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
 
                         List<LocalDate> listOfDates = Stream.iterate(startDate, date -> date.plusDays(1))
-                                .limit(numOfDays)
+                                .limit(numOfDays+1)
                                 .collect(Collectors.toList());
 
                         dateTimeModels.clear();
