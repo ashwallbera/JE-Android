@@ -13,12 +13,13 @@ import java.util.TimeZone;
 public class DateTimeModel {
     private String date;
     private String day;
+    private String projectid;
     public DateTimeModel(){
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public DateTimeModel(String date){
+    public DateTimeModel(String date, String projectid){
 //        Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 //        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy");
 //        String formatted = format.format(utc.getTime());
@@ -28,6 +29,7 @@ public class DateTimeModel {
         LocalDate localDate = LocalDate.parse(""+date,dtf);
         this.date = ""+localDate.getMonth()+" "+localDate.getDayOfMonth()+", "+localDate.getYear();
         this.day = localDate.getDayOfWeek().toString();
+        this.projectid = projectid;
     }
 
     public String getDate() {
