@@ -78,7 +78,8 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
         }
 
         void bind(DateTimeModel dateTimeModel){
-
+            date.setText(dateTimeModel.getDate());
+            day.setText(dateTimeModel.getDay());
             //List of employee
             ArrayList<TimesheetModel> timesheetModels = new ArrayList<>();
             // create adapter
