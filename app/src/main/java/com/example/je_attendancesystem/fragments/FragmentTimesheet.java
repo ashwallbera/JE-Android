@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.je_attendancesystem.R;
 import com.example.je_attendancesystem.adapter.DateTimeAdapter;
 import com.example.je_attendancesystem.models.DateTimeModel;
+import com.example.je_attendancesystem.models.ProjectModel;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -55,6 +57,7 @@ public class FragmentTimesheet extends Fragment {
     String startDate;
     String endDate;
     DateTimeAdapter adapter;
+    ProjectModel projectModel;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -95,6 +98,7 @@ public class FragmentTimesheet extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -111,8 +115,8 @@ public class FragmentTimesheet extends Fragment {
 
         //get the project object
         String objFromCard = getArguments().getString("projectObj");
-
-        Toast.makeText(this.getContext(), "Timesheet "+formatted, Toast.LENGTH_SHORT).show();
+        projectModel = new Gson().fromJson(objFromCard, ProjectModel.class);
+        Toast.makeText(this.getContext(), "Timesheet ", Toast.LENGTH_SHORT).show();
 
         // now register the text view and the button with
         // their appropriate IDs
@@ -197,7 +201,7 @@ public class FragmentTimesheet extends Fragment {
                         dateTimeModels.clear();
                         for(LocalDate date: listOfDates){
                           //  System.out.println(date.format(parseFormat));
-                            dateTimeModels.add(new DateTimeModel(""+date.format(parseFormat)));
+                            dateTimeModels.add(new DateTimeModel(""+date.format(parseFormat),""+projectModel.getId()));
                         }
                         adapter.notifyDataSetChanged();
 
@@ -228,14 +232,14 @@ public class FragmentTimesheet extends Fragment {
         });
 
 
-// ...
+        //Firebase instance
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // models
 
          dateTimeModels = new ArrayList<>();
 
-       // mDatabase.child("attendance")
-        setAttendance("");
+        //setAttendance(projectModel.getId());
+        dateTimeModels.add(new DateTimeModel(startDate,projectModel.getId())); // initial date
         //Recyclerview instance
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this.getActivity());
@@ -258,8 +262,13 @@ public class FragmentTimesheet extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Log.d("datecreated",""+snapshot.getValue());
                         for(DataSnapshot data: snapshot.getChildren() ){
-                            dateTimeModels.add(new DateTimeModel(data.child("datecreated").getValue().toString()));
-                            adapter.notifyDataSetChanged();
+                            Log.d("project",""+data.child("projectid").getValue());
+                            //Check if the project is equal to child
+                            if(data.child("projectid").getValue().toString().equals(projectid)){
+                                dateTimeModels.add(new DateTimeModel(data.child("datecreated").getValue().toString(),projectModel.getId()));
+                                adapter.notifyDataSetChanged();
+                            }
+
                         }
                     }
 

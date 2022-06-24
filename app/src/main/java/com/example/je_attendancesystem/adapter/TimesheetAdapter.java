@@ -1,17 +1,24 @@
 package com.example.je_attendancesystem.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.je_attendancesystem.R;
 import com.example.je_attendancesystem.models.TimesheetModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -59,12 +66,29 @@ public class TimesheetAdapter extends RecyclerView.Adapter {
     }
 
     public class TimesheetAdapterHolder extends RecyclerView.ViewHolder{
-
+        TextView timesheet_full_name, position,time_in,time_out;
+        DatabaseReference mDatabase;
         public TimesheetAdapterHolder(@NonNull View itemView) {
             super(itemView);
+            timesheet_full_name = itemView.findViewById(R.id.timesheet_full_name);
+            position = itemView.findViewById(R.id.timesheet_position);
+            time_in = itemView.findViewById(R.id.time_in);
+            time_out = itemView.findViewById(R.id.time_out);
+            mDatabase = FirebaseDatabase.getInstance().getReference();
         }
         void bind(TimesheetModel timesheetModel){
-
+            //READ account
+//            mDatabase.child("attendance").child(""+timesheetModel.getUserid()).addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    Log.d("USER",""+snapshot.getValue());
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
         }
     }
 

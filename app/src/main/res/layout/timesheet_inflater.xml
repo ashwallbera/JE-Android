@@ -15,16 +15,17 @@
 
     <TextView
         android:id="@+id/timesheet_full_name"
-        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
+        android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/profile_pic"
         android:text="Name"
         android:textColor="@color/white"
         android:textSize="13dp" />
 
     <TextView
+        android:id="@+id/timesheet_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/timesheet_full_name"
@@ -34,17 +35,17 @@
         android:text="Position"
         android:textColor="@color/white"
         android:textSize="13dp" />
+
     <TextView
-        android:layout_marginTop="15dp"
         android:id="@+id/time_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="IN: 9: 30 am"
         android:layout_marginStart="43dp"
+        android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/timesheet_full_name"
+        android:text="IN: 9: 30 am"
         android:textColor="@color/white"
-        android:textSize="13dp"
-        />
+        android:textSize="13dp" />
 
     <TextView
         android:id="@+id/time_out"

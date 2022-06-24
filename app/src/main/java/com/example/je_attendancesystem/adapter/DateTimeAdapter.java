@@ -2,6 +2,7 @@ package com.example.je_attendancesystem.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.je_attendancesystem.R;
 import com.example.je_attendancesystem.models.DateTimeModel;
 import com.example.je_attendancesystem.models.TimesheetModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -65,6 +71,7 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
         RecyclerView recyclerView;
         TimesheetAdapter adapter;
         RelativeLayout date_time_layout_model;
+        DatabaseReference mDatabase;
         public DateTimeAdapterHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.text_view_date);
@@ -75,6 +82,7 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(manager);
             date_time_layout_model = itemView.findViewById(R.id.date_time_layout_model);
+            mDatabase = FirebaseDatabase.getInstance().getReference();
         }
 
         void bind(DateTimeModel dateTimeModel){
@@ -117,12 +125,38 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if(x % 2 == 0){
-                        ArrayList<TimesheetModel> timesheetModels = new ArrayList<>();
-                        timesheetModels.add(new TimesheetModel());
-                        timesheetModels.add(new TimesheetModel());
-                        adapter.getTimesheetModels().addAll(timesheetModels);
-                        adapter.notifyDataSetChanged();
+                        mDatabase.child("attendance").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                ArrayList<TimesheetModel> timesheetModels = new ArrayList<>();
+
+                                Log.d("TIMESHEETADAPTERS",""+snapshot.getValue().toString());
+                                for(DataSnapshot child: snapshot.getChildren()){
+                                    Log.d("TIMESHEETADAPTERSCHILD",""+child.child("timeIn").getValue());
+
+
+                                    timesheetModels.add(new TimesheetModel(
+                                            child.child("id").getValue().toString(),
+                                            child.child("projectid").getValue().toString(),
+                                            child.child("userid").getValue().toString(),
+                                            child.child("timeIn").getValue().toString(),
+                                            child.child("timeOut").getValue().toString(),
+                                            child.child("datecreated").getValue().toString()
+                                            ));
+                                }
+
+                                adapter.getTimesheetModels().addAll(timesheetModels);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
                         btn_drop_down.setBackground(context.getDrawable(R.drawable.ic_close_24));
+
 
                     }else {
                         adapter.getTimesheetModels().clear();
