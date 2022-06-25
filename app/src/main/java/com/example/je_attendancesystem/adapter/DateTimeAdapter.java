@@ -165,12 +165,40 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
                         adapter.getTimesheetModels().clear();
                         adapter.notifyDataSetChanged();
                         btn_drop_down.setBackground(context.getDrawable(R.drawable.ic_drop_down));
+
+
                     }
                     x++;
 
                 }
             });
-            //Get data here
+            //Check data here
+            //Remove the view if the datemodels doesnt have data in firebase with child datecreated
+            mDatabase.child("attendance").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    Log.d("TIMESHEETADAPTERS",""+snapshot.getValue().toString());
+                    for(DataSnapshot child: snapshot.getChildren()){
+                        Log.d("CHECKDATA",""+dateTimeModel.getDate());
+
+                        //Check if this model has data
+                        if(!child.child("datecreated").getValue().toString().equals(""+dateTimeModel.getDate())
+                                //&& !child.child("projectid").getValue().toString().equals(""+dateTimeModel.getProjectid())
+                        ){
+                            dateTimeModels.remove(dateTimeModel);
+                            DateTimeAdapter.this.notifyDataSetChanged();
+                        }
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
         }
     }
