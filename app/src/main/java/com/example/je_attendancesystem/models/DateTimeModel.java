@@ -14,6 +14,7 @@ public class DateTimeModel {
     private String date;
     private String day;
     private String projectid;
+    private LocalDate localDate;
     public DateTimeModel(){
 
     }
@@ -27,9 +28,11 @@ public class DateTimeModel {
         //USE ANOTHER FORMATTER TO PARSE TO LOCALDATE THE UTC DATE
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("M/dd/yyyy");
         LocalDate localDate = LocalDate.parse(""+date,dtf);
-        this.date = ""+localDate.getMonth()+" "+localDate.getDayOfMonth()+", "+localDate.getYear();
+        //this.date = ""+localDate.getMonth()+" "+localDate.getDayOfMonth()+", "+localDate.getYear();
+        this.date = date;
         this.day = localDate.getDayOfWeek().toString();
         this.projectid = projectid;
+        this.localDate = LocalDate.parse(date,dtf);
     }
 
     public String getDate() {
@@ -38,5 +41,13 @@ public class DateTimeModel {
 
     public String getDay() {
         return day;
+    }
+
+    public String getProjectid() {
+        return projectid;
+    }
+
+    public LocalDate getLocalDate() {
+        return localDate;
     }
 }

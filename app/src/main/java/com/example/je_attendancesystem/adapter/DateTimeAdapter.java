@@ -132,17 +132,20 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
                                 adapter.getTimesheetModels().clear();
                                 Log.d("TIMESHEETADAPTERS",""+snapshot.getValue().toString());
                                 for(DataSnapshot child: snapshot.getChildren()){
-                                    Log.d("TIMESHEETADAPTERSCHILD",""+child.child("timeIn").getValue());
+                                    Log.d("TIMESHEETADAPTERSCHILD",""+dateTimeModel.getLocalDate().toString());
 
+                                    if(child.child("datecreated").getValue().toString().equals(""+dateTimeModel.getDate())
+                                    && child.child("projectid").getValue().toString().equals(""+dateTimeModel.getProjectid())){
+                                        timesheetModels.add(new TimesheetModel(
+                                                child.child("id").getValue().toString(),
+                                                child.child("projectid").getValue().toString(),
+                                                child.child("userid").getValue().toString(),
+                                                child.child("timeIn").getValue().toString(),
+                                                child.child("timeOut").getValue().toString(),
+                                                child.child("datecreated").getValue().toString()
+                                        ));
+                                    }
 
-                                    timesheetModels.add(new TimesheetModel(
-                                            child.child("id").getValue().toString(),
-                                            child.child("projectid").getValue().toString(),
-                                            child.child("userid").getValue().toString(),
-                                            child.child("timeIn").getValue().toString(),
-                                            child.child("timeOut").getValue().toString(),
-                                            child.child("datecreated").getValue().toString()
-                                            ));
                                 }
 
                                 adapter.getTimesheetModels().addAll(timesheetModels);
