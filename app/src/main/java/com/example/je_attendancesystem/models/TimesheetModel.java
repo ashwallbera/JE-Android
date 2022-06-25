@@ -7,6 +7,7 @@ public class TimesheetModel {
     public String timeIn;
     public String timeOut;
     public String datecreated;
+    public String uid;
 
     public TimesheetModel(){
 
@@ -42,5 +43,9 @@ public class TimesheetModel {
 
     public String getId() {
         return id;
+    }
+
+    public String getUid() {
+        return uid;
     }
 }
