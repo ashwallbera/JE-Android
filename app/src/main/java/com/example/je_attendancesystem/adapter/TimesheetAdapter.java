@@ -77,18 +77,27 @@ public class TimesheetAdapter extends RecyclerView.Adapter {
             mDatabase = FirebaseDatabase.getInstance().getReference();
         }
         void bind(TimesheetModel timesheetModel){
+
             //READ account
-//            mDatabase.child("attendance").child(""+timesheetModel.getUserid()).addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    Log.d("USER",""+snapshot.getValue());
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                }
-//            });
+            mDatabase.child("users").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Log.d("TIMESHEETUSERS: "+timesheetModel.getUserid(),""+snapshot.getValue());
+                    for(DataSnapshot data: snapshot.getChildren()){
+                        Log.d("TIMESHEETUSERS: "+timesheetModel.getUserid(),""+data.getValue());
+                        String fullname = data.child("lname").getValue()+" "+data.child("fname").getValue()+", "+data.child("mname").getValue();
+                        timesheet_full_name.setText(""+fullname);
+                        position.setText(""+data.child("position").getValue());
+                        time_in.setText(timesheetModel.getTimeIn());
+                        time_out.setText(timesheetModel.getTimeOut());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
 
