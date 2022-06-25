@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -61,6 +62,13 @@ public class MainMenu extends AppCompatActivity {
         navDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.menu_logout:
+                        Intent intent = new Intent(MainMenu.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
                 return false;
             }
         });
