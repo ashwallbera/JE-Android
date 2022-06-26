@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.je_attendancesystem.R;
+import com.example.je_attendancesystem.activity.Capture;
 import com.example.je_attendancesystem.adapter.DateTimeAdapter;
 import com.example.je_attendancesystem.models.DateTimeModel;
 import com.example.je_attendancesystem.models.ProjectModel;
@@ -32,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -50,7 +52,7 @@ import java.util.stream.Stream;
  * create an instance of this fragment.
  */
 public class FragmentTimesheet extends Fragment {
-    private Button mPickDateButton;
+    private Button mPickDateButton, btn_time_in;
     ArrayList<DateTimeModel> dateTimeModels;
     //Firebase instance
     DatabaseReference mDatabase;
@@ -106,7 +108,6 @@ public class FragmentTimesheet extends Fragment {
         View view = inflater.inflate(R.layout.fragment_timesheet, container, false);
 
         //GET TIME NOW
-
         Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy");
         String formatted = format.format(utc.getTime());
@@ -117,6 +118,21 @@ public class FragmentTimesheet extends Fragment {
         String objFromCard = getArguments().getString("projectObj");
         projectModel = new Gson().fromJson(objFromCard, ProjectModel.class);
         Toast.makeText(this.getContext(), "Timesheet ", Toast.LENGTH_SHORT).show();
+
+        //Time in btn
+        btn_time_in = (Button) view.findViewById(R.id.btn_timein);
+        btn_time_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+                intentIntegrator.setPrompt("HELLO");
+                intentIntegrator.setBeepEnabled(true);
+                intentIntegrator.setOrientationLocked(true);
+                intentIntegrator.setCaptureActivity(Capture.class);
+                intentIntegrator.initiateScan();
+
+            }
+        });
 
         // now register the text view and the button with
         // their appropriate IDs
@@ -278,4 +294,6 @@ public class FragmentTimesheet extends Fragment {
                     }
                 });
     }
+
+
 }

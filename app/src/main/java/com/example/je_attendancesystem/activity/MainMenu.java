@@ -1,6 +1,8 @@
 package com.example.je_attendancesystem.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -9,15 +11,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.example.je_attendancesystem.R;
 import com.example.je_attendancesystem.fragments.FragmentTimesheet;
 import com.example.je_attendancesystem.fragments.FragmentProject;
 import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class MainMenu extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -101,4 +107,26 @@ public class MainMenu extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+
+        //Check if empty
+        if(intentResult.getContents() != null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainMenu.this);
+            builder.setTitle("Result");
+            builder.setMessage(intentResult.getContents());
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "OOPS ERROR", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
