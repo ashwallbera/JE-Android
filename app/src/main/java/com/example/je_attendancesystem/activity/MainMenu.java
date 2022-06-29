@@ -34,8 +34,10 @@ import com.example.je_attendancesystem.R;
 import com.example.je_attendancesystem.api.Api;
 import com.example.je_attendancesystem.fragments.FragmentTimesheet;
 import com.example.je_attendancesystem.fragments.FragmentProject;
+import com.example.je_attendancesystem.models.ProjectModel;
 import com.example.je_attendancesystem.models.TimesheetModel;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -49,6 +51,8 @@ public class MainMenu extends AppCompatActivity {
     private NavigationView navDrawer;
     private FragmentProject fragmentProject;
     private FragmentTimesheet fragmentCalendar;
+    public IntentResult intentResult;
+    FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +122,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.addToBackStack(fragment.toString());
@@ -129,14 +133,19 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
 
         //Check if empty
-        if(intentResult.getContents() != null){
+        if(intentResult.getContents() != null ){
+            String objFromCard = fragmentManager.getFragments().get(0).getArguments().getString("projectObj");
+            ProjectModel projectModel = new Gson().fromJson(objFromCard, ProjectModel.class);
+            Log.d("DATAFROMFRAGMENT",""+projectModel.getId());
+
             AlertDialog.Builder builder = new AlertDialog.Builder(MainMenu.this);
             builder.setTitle("Result");
             builder.setMessage(intentResult.getContents());
 
+            createAttendance(new TimesheetModel("",""+projectModel.getId(),""+intentResult.getContents(),"","",""));
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -150,14 +159,21 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
+    public IntentResult getIntentResult() {
+        return intentResult;
+    }
 
     private void createAttendance(TimesheetModel model){
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = Api.server+"api/attendances";
+            String URL = Api.server+"/api/attendances";
             JSONObject jsonBody = new JSONObject();
-            jsonBody.put("Title", "Android Volley Demo");
-            jsonBody.put("Author", "BNK");
+            jsonBody.put("id", "");
+            jsonBody.put("projectid", ""+model.getProjectid());
+            jsonBody.put("userid", ""+model.getUserid());
+            jsonBody.put("timeIn", "BNK");
+            jsonBody.put("timeOut", "BNK");
+            jsonBody.put("datecreated", "BNK");
             final String requestBody = jsonBody.toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {

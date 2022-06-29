@@ -3,6 +3,7 @@ package com.example.je_attendancesystem.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.je_attendancesystem.R;
 import com.example.je_attendancesystem.activity.Capture;
+import com.example.je_attendancesystem.activity.MainMenu;
 import com.example.je_attendancesystem.adapter.DateTimeAdapter;
 import com.example.je_attendancesystem.models.DateTimeModel;
 import com.example.je_attendancesystem.models.ProjectModel;
@@ -100,13 +102,16 @@ public class FragmentTimesheet extends Fragment {
         }
     }
 
+    public ProjectModel getProjectModel() {
+        return projectModel;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_timesheet, container, false);
-
         //GET TIME NOW
         Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy");
@@ -117,7 +122,7 @@ public class FragmentTimesheet extends Fragment {
         //get the project object
         String objFromCard = getArguments().getString("projectObj");
         projectModel = new Gson().fromJson(objFromCard, ProjectModel.class);
-        Toast.makeText(this.getContext(), "Timesheet ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getContext(), "Timesheet "+projectModel.getId(), Toast.LENGTH_SHORT).show();
 
         //Time in btn
         btn_time_in = (Button) view.findViewById(R.id.btn_timein);
@@ -126,10 +131,13 @@ public class FragmentTimesheet extends Fragment {
             public void onClick(View view) {
                 IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
                 intentIntegrator.setPrompt("HELLO");
+                intentIntegrator.addExtra("projectid", projectModel.getId());
                 intentIntegrator.setBeepEnabled(true);
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
                 intentIntegrator.initiateScan();
+
+
 
             }
         });
@@ -200,24 +208,24 @@ public class FragmentTimesheet extends Fragment {
                         utc2.setTimeInMillis(selected.second);
                         String formatted2 = format.format(utc2.getTime());
 
-                        Toast toast = Toast.makeText(context, formatted+" "+formatted2, duration);
+                        Toast toast = Toast.makeText(context, formatted + " " + formatted2, duration);
                         toast.show();
 
                         //Get list of dates in date range
                         DateTimeFormatter parseFormat = DateTimeFormatter.ofPattern("M/dd/yyyy");
-                        LocalDate startDate = LocalDate.parse(""+formatted,parseFormat);
-                        LocalDate endDate = LocalDate.parse(""+formatted2,parseFormat);
+                        LocalDate startDate = LocalDate.parse("" + formatted, parseFormat);
+                        LocalDate endDate = LocalDate.parse("" + formatted2, parseFormat);
 
                         long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
 
                         List<LocalDate> listOfDates = Stream.iterate(startDate, date -> date.plusDays(1))
-                                .limit(numOfDays+1)
+                                .limit(numOfDays + 1)
                                 .collect(Collectors.toList());
 
                         dateTimeModels.clear();
-                        for(LocalDate date: listOfDates){
-                          //  System.out.println(date.format(parseFormat));
-                            dateTimeModels.add(new DateTimeModel(""+date.format(parseFormat),""+projectModel.getId()));
+                        for (LocalDate date : listOfDates) {
+                            //  System.out.println(date.format(parseFormat));
+                            dateTimeModels.add(new DateTimeModel("" + date.format(parseFormat), "" + projectModel.getId()));
                         }
                         adapter.notifyDataSetChanged();
 
@@ -252,10 +260,10 @@ public class FragmentTimesheet extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // models
 
-         dateTimeModels = new ArrayList<>();
+        dateTimeModels = new ArrayList<>();
 
         //setAttendance(projectModel.getId());
-        dateTimeModels.add(new DateTimeModel(startDate,projectModel.getId())); // initial date
+        dateTimeModels.add(new DateTimeModel(startDate, projectModel.getId())); // initial date
         //Recyclerview instance
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this.getActivity());
@@ -266,22 +274,25 @@ public class FragmentTimesheet extends Fragment {
         adapter = new DateTimeAdapter(this.getContext(), dateTimeModels);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        //Activity result
+
         return view;
     }
 
-    private void setAttendance(String projectid){
+    private void setAttendance(String projectid) {
         mDatabase.child("attendance").orderByChild("datecreated")
-                .startAt(""+startDate).endAt(""+endDate)
+                .startAt("" + startDate).endAt("" + endDate)
                 .addValueEventListener(new ValueEventListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d("datecreated",""+snapshot.getValue());
-                        for(DataSnapshot data: snapshot.getChildren() ){
-                            Log.d("project",""+data.child("projectid").getValue());
+                        Log.d("datecreated", "" + snapshot.getValue());
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            Log.d("project", "" + data.child("projectid").getValue());
                             //Check if the project is equal to child
-                            if(data.child("projectid").getValue().toString().equals(projectid)){
-                                dateTimeModels.add(new DateTimeModel(data.child("datecreated").getValue().toString(),projectModel.getId()));
+                            if (data.child("projectid").getValue().toString().equals(projectid)) {
+                                dateTimeModels.add(new DateTimeModel(data.child("datecreated").getValue().toString(), projectModel.getId()));
                                 adapter.notifyDataSetChanged();
                             }
 
@@ -294,6 +305,8 @@ public class FragmentTimesheet extends Fragment {
                     }
                 });
     }
+
+
 
 
 }

@@ -130,7 +130,7 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 ArrayList<TimesheetModel> timesheetModels = new ArrayList<>();
                                 adapter.getTimesheetModels().clear();
-                                Log.d("TIMESHEETADAPTERS",""+snapshot.getValue().toString());
+
                                 for(DataSnapshot child: snapshot.getChildren()){
                                     Log.d("TIMESHEETADAPTERSCHILD",""+dateTimeModel.getLocalDate().toString());
 
