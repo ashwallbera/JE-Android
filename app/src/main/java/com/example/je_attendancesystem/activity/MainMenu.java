@@ -171,9 +171,9 @@ public class MainMenu extends AppCompatActivity {
             jsonBody.put("id", "");
             jsonBody.put("projectid", ""+model.getProjectid());
             jsonBody.put("userid", ""+model.getUserid());
-            jsonBody.put("timeIn", "BNK");
-            jsonBody.put("timeOut", "BNK");
-            jsonBody.put("datecreated", "BNK");
+            jsonBody.put("timeIn", "");
+            jsonBody.put("timeOut", "");
+            jsonBody.put("datecreated", "");
             final String requestBody = jsonBody.toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
