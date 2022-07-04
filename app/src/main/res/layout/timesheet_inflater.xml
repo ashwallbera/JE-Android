@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/profile_pic"
-        android:layout_centerVertical="true"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="22dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft=""
         android:background="@drawable/ic_launcher_foreground" />
 
     <TextView
