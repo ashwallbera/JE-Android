@@ -27,20 +27,31 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference mDatabase;
     EditText username, password;
     SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sharedPref = getPreferences(MODE_PRIVATE);
+        editor = sharedPref.edit();
        username = (EditText) findViewById(R.id.username);
        password = (EditText) findViewById(R.id.password) ;
 
-       if(checkCached() >= 2){
-           Intent intent = new Intent(MainActivity.this, MainMenu.class);
-           startActivity(intent);
-           intent.putExtra("username",sharedPref.getAll().get("username")+"");
-           intent.putExtra("password",sharedPref.getAll().get("password")+"");
-           finish();
+       Log.d("hasExtra",getIntent().hasExtra("logout")+"");
+       if(getIntent().hasExtra("logout")){
+           editor.clear();
+           editor.commit();
+           Log.d("logout",""+getIntent().getStringExtra("logout"));
+       }else
+       {
+           if(checkCached() >= 2){
+               Intent intent = new Intent(MainActivity.this, MainMenu.class);
+               startActivity(intent);
+               intent.putExtra("username",sharedPref.getAll().get("username")+"");
+               intent.putExtra("password",sharedPref.getAll().get("password")+"");
+               finish();
+           }
+
        }
 
         Button btn_login = findViewById(R.id.btn_login);
@@ -79,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void writeString() {
-        SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("username", ""+username.getText());
         editor.putString("password", ""+password.getText());
         editor.apply();

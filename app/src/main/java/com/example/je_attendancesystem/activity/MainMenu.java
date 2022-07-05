@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -53,6 +54,7 @@ public class MainMenu extends AppCompatActivity {
     private FragmentTimesheet fragmentCalendar;
     public IntentResult intentResult;
     FragmentManager fragmentManager;
+    SharedPreferences sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +95,10 @@ public class MainMenu extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.menu_logout:
+                        sharedPref = getPreferences(MODE_PRIVATE);
+                        sharedPref.getAll().clear();
                         Intent intent = new Intent(MainMenu.this, MainActivity.class);
+                        intent.putExtra("logout","logout");
                         startActivity(intent);
                         finish();
                         break;
@@ -226,4 +231,7 @@ public class MainMenu extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+
 }
