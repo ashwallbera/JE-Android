@@ -28,10 +28,10 @@
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="350dp"
-        app:srcCompat="@drawable/ic_signinbox"
-        />
+        app:srcCompat="@drawable/ic_signinbox" />
 
     <EditText
+        android:id="@+id/username"
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
@@ -43,6 +43,7 @@
         android:textSize="12dp" />
 
     <EditText
+        android:id="@+id/password"
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
