@@ -28,6 +28,15 @@
             android:layout_toStartOf="@+id/btn_pick"
             android:text="Time in" />
 
+        <Button
+            android:id="@+id/btn_timeout"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/btn_pick"
+            android:text="Time out" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
