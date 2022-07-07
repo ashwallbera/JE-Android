@@ -54,7 +54,7 @@ import java.util.stream.Stream;
  * create an instance of this fragment.
  */
 public class FragmentTimesheet extends Fragment {
-    private Button mPickDateButton, btn_time_in;
+    private Button mPickDateButton, btn_time_in,btn_time_out;
     ArrayList<DateTimeModel> dateTimeModels;
     //Firebase instance
     DatabaseReference mDatabase;
@@ -126,19 +126,36 @@ public class FragmentTimesheet extends Fragment {
 
         //Time in btn
         btn_time_in = (Button) view.findViewById(R.id.btn_timein);
+        btn_time_out = (Button) view.findViewById(R.id.btn_timeout);
         btn_time_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
                 intentIntegrator.setPrompt("HELLO");
                 intentIntegrator.addExtra("projectid", projectModel.getId());
+                intentIntegrator.addExtra("timein","timein");
                 intentIntegrator.setBeepEnabled(true);
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
                 intentIntegrator.initiateScan();
+                Log.d("EXTRAS",""+intentIntegrator.getMoreExtras().get("projectid"));
 
 
 
+            }
+        });
+
+        btn_time_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+                intentIntegrator.setPrompt("HELLO");
+                intentIntegrator.addExtra("projectid", projectModel.getId());
+                intentIntegrator.addExtra("timeout","timeout");
+                intentIntegrator.setBeepEnabled(true);
+                intentIntegrator.setOrientationLocked(true);
+                intentIntegrator.setCaptureActivity(Capture.class);
+                intentIntegrator.initiateScan();
             }
         });
 
@@ -274,8 +291,6 @@ public class FragmentTimesheet extends Fragment {
         adapter = new DateTimeAdapter(this.getContext(), dateTimeModels);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
-        //Activity result
 
         return view;
     }

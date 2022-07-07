@@ -142,9 +142,10 @@ public class MainMenu extends AppCompatActivity {
 
         //Check if empty
         if(intentResult.getContents() != null ){
+            //Get current project object from fragments
             String objFromCard = fragmentManager.getFragments().get(0).getArguments().getString("projectObj");
             ProjectModel projectModel = new Gson().fromJson(objFromCard, ProjectModel.class);
-            Log.d("DATAFROMFRAGMENT",""+projectModel.getId());
+            Log.d("DATAFROMFRAGMENT",""+intentResult.getContents());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(MainMenu.this);
             builder.setTitle("Result");
