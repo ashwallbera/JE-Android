@@ -145,13 +145,22 @@ public class MainMenu extends AppCompatActivity {
             //Get current project object from fragments
             String objFromCard = fragmentManager.getFragments().get(0).getArguments().getString("projectObj");
             ProjectModel projectModel = new Gson().fromJson(objFromCard, ProjectModel.class);
-            Log.d("DATAFROMFRAGMENT",""+intentResult.getContents());
+
 
             AlertDialog.Builder builder = new AlertDialog.Builder(MainMenu.this);
             builder.setTitle("Result");
             builder.setMessage(intentResult.getContents());
 
-            createAttendance(new TimesheetModel("",""+projectModel.getId(),""+intentResult.getContents(),"","",""));
+            if(fragmentManager.getFragments().get(0).getArguments().getString("timein").equals("timein")){
+                createAttendance(new TimesheetModel("",""+projectModel.getId(),""+intentResult.getContents(),"","",""));
+                Log.d("DATAFROMFRAGMENT",""+fragmentManager.getFragments().get(0).getArguments().getString("action"));
+            }else{
+                Log.d("DATAFROMFRAGMENT",""+fragmentManager.getFragments().get(0).getArguments().getString("action"));
+            }
+
+            //Update attendance for timeout
+
+
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

@@ -62,6 +62,7 @@ public class FragmentTimesheet extends Fragment {
     String endDate;
     DateTimeAdapter adapter;
     ProjectModel projectModel;
+    String action;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -131,6 +132,7 @@ public class FragmentTimesheet extends Fragment {
             @Override
             public void onClick(View view) {
                 IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
+                FragmentTimesheet.this.getArguments().putString("action","timein");
                 intentIntegrator.setPrompt("HELLO");
                 intentIntegrator.addExtra("projectid", projectModel.getId());
                 intentIntegrator.addExtra("timein","timein");
@@ -138,7 +140,7 @@ public class FragmentTimesheet extends Fragment {
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
                 intentIntegrator.initiateScan();
-                Log.d("EXTRAS",""+intentIntegrator.getMoreExtras().get("projectid"));
+                Log.d("EXTRAS",""+intentIntegrator.getMoreExtras().get("timein"));
 
 
 
@@ -148,6 +150,7 @@ public class FragmentTimesheet extends Fragment {
         btn_time_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentTimesheet.this.getArguments().putString("action","timeout");
                 IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
                 intentIntegrator.setPrompt("HELLO");
                 intentIntegrator.addExtra("projectid", projectModel.getId());
@@ -322,6 +325,7 @@ public class FragmentTimesheet extends Fragment {
     }
 
 
-
-
+    public String getAction() {
+        return action;
+    }
 }
