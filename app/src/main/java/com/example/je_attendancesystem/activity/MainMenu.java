@@ -151,7 +151,7 @@ public class MainMenu extends AppCompatActivity {
             builder.setTitle("Result");
             builder.setMessage(intentResult.getContents());
 
-            if(fragmentManager.getFragments().get(0).getArguments().getString("timein").equals("timein")){
+            if(fragmentManager.getFragments().get(0).getArguments().getString("action").equals("timein")){
                 createAttendance(new TimesheetModel("",""+projectModel.getId(),""+intentResult.getContents(),"","",""));
                 Log.d("DATAFROMFRAGMENT",""+fragmentManager.getFragments().get(0).getArguments().getString("action"));
             }else{

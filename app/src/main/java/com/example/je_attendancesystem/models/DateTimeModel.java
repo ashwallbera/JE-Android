@@ -26,7 +26,7 @@ public class DateTimeModel {
 //        String formatted = format.format(utc.getTime());
 
         //USE ANOTHER FORMATTER TO PARSE TO LOCALDATE THE UTC DATE
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("M/dd/yyyy");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("M/d/yyyy");
         LocalDate localDate = LocalDate.parse(""+date,dtf);
         //this.date = ""+localDate.getMonth()+" "+localDate.getDayOfMonth()+", "+localDate.getYear();
         this.date = date;

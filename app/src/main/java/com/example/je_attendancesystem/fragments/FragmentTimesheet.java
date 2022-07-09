@@ -115,7 +115,7 @@ public class FragmentTimesheet extends Fragment {
         View view = inflater.inflate(R.layout.fragment_timesheet, container, false);
         //GET TIME NOW
         Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("M/d/yyyy");
         String formatted = format.format(utc.getTime());
         startDate = formatted;
         endDate = formatted;
@@ -135,7 +135,7 @@ public class FragmentTimesheet extends Fragment {
                 FragmentTimesheet.this.getArguments().putString("action","timein");
                 intentIntegrator.setPrompt("HELLO");
                 intentIntegrator.addExtra("projectid", projectModel.getId());
-                intentIntegrator.addExtra("timein","timein");
+
                 intentIntegrator.setBeepEnabled(true);
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
@@ -154,7 +154,7 @@ public class FragmentTimesheet extends Fragment {
                 IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
                 intentIntegrator.setPrompt("HELLO");
                 intentIntegrator.addExtra("projectid", projectModel.getId());
-                intentIntegrator.addExtra("timeout","timeout");
+
                 intentIntegrator.setBeepEnabled(true);
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(Capture.class);
