@@ -232,7 +232,7 @@ public class FragmentTimesheet extends Fragment {
                         toast.show();
 
                         //Get list of dates in date range
-                        DateTimeFormatter parseFormat = DateTimeFormatter.ofPattern("M/dd/yyyy");
+                        DateTimeFormatter parseFormat = DateTimeFormatter.ofPattern("M/d/yyyy");
                         LocalDate startDate = LocalDate.parse("" + formatted, parseFormat);
                         LocalDate endDate = LocalDate.parse("" + formatted2, parseFormat);
 
