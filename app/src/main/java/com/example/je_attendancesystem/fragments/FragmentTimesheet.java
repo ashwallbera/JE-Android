@@ -221,7 +221,7 @@ public class FragmentTimesheet extends Fragment {
 
                         Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                         utc.setTimeInMillis(selected.first);
-                        SimpleDateFormat format = new SimpleDateFormat("M/dd/yyyy");
+                        SimpleDateFormat format = new SimpleDateFormat("M/d/yyyy");
                         String formatted = format.format(utc.getTime());
 
                         Calendar utc2 = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
