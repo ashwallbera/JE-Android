@@ -84,12 +84,16 @@ public class TimesheetAdapter extends RecyclerView.Adapter {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Log.d("TIMESHEETUSERS: "+timesheetModel.getUserid(),""+snapshot.getValue());
                     for(DataSnapshot data: snapshot.getChildren()){
-                        Log.d("TIMESHEETUSERS: "+timesheetModel.getUserid(),""+data.getValue());
-                        String fullname = data.child("lname").getValue()+" "+data.child("fname").getValue()+", "+data.child("mname").getValue();
-                        timesheet_full_name.setText(""+fullname);
-                        position.setText(""+data.child("position").getValue());
-                        time_in.setText(timesheetModel.getTimeIn());
-                        time_out.setText(timesheetModel.getTimeOut());
+                        Log.d("TIMESHEETUSERS: "+timesheetModel.getUserid(),""+data.child("id").getValue().toString());
+                        if(timesheetModel.getUserid().toString().equals(data.child("id").getValue().toString())){
+
+                            String fullname = data.child("lname").getValue()+" "+data.child("fname").getValue()+", "+data.child("mname").getValue();
+                            timesheet_full_name.setText(""+fullname);
+                            position.setText(""+data.child("position").getValue());
+                            time_in.setText(timesheetModel.getTimeIn());
+                            time_out.setText(timesheetModel.getTimeOut());
+                        }
+
                     }
                 }
 

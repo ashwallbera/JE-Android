@@ -136,6 +136,7 @@ public class DateTimeAdapter extends RecyclerView.Adapter {
 
                                     if(child.child("datecreated").getValue().toString().equals(""+dateTimeModel.getDate())
                                     && child.child("projectid").getValue().toString().equals(""+dateTimeModel.getProjectid())){
+                                        Log.d("TIMESHEETADAPTERSCHILDID",""+child.child("userid").getValue().toString());
                                         timesheetModels.add(new TimesheetModel(
                                                 child.child("id").getValue().toString(),
                                                 child.child("projectid").getValue().toString(),
